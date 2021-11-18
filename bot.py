@@ -1,11 +1,3 @@
-""""
-Copyright © Krypton 2021 - https://github.com/kkrypt0nn
-Description:
-This is a template to create your own discord bot in python.
-
-Version: 3.1.1
-"""
-
 import json
 import os
 import platform
@@ -26,11 +18,7 @@ else:
         config = json.load(file)
 
 """	
-Setup bot intents (events restrictions)
-For more information about intents, please go to the following websites:
-https://discordpy.readthedocs.io/en/latest/intents.html
-https://discordpy.readthedocs.io/en/latest/intents.html#privileged-intents
-
+Guide for myself:
 
 Default Intents:
 intents.messages = True
@@ -57,11 +45,11 @@ intents.members = True
 
 intents = discord.Intents.default()
 
-bot = Bot(command_prefix="", intents=intents)  # The command prefix is a required argument, but will never be used
+bot = Bot(command_prefix="", intents=intents)  
 slash = SlashCommand(bot, sync_commands=True)
 
 
-# The code in this even is executed when the bot is ready
+
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user.name}")
@@ -72,14 +60,14 @@ async def on_ready():
     status_task.start()
 
 
-# Setup the game status task of the bot
+
 @tasks.loop(minutes=1.0)
 async def status_task():
     statuses = ["with you!", "with Krypton!", "with humans!"]
     await bot.change_presence(activity=discord.Game(random.choice(statuses)))
 
 
-# Removes the default help command of discord.py to be able to create our custom help command.
+
 bot.remove_command("help")
 
 if __name__ == "__main__":
@@ -94,16 +82,16 @@ if __name__ == "__main__":
                 print(f"Failed to load extension {extension}\n{exception}")
 
 
-# The code in this event is executed every time someone sends a message, with or without the prefix
+
 @bot.event
 async def on_message(message: discord.Message):
-    # Ignores if a command is being executed by a bot or by the bot itself
+    
     if message.author == bot.user or message.author.bot:
         return
     await bot.process_commands(message)
 
 
-# The code in this event is executed every time a command has been *successfully* executed
+
 @bot.event
 async def on_slash_command(ctx: SlashContext):
     full_command_name = ctx.name
@@ -113,20 +101,14 @@ async def on_slash_command(ctx: SlashContext):
         f"Executed {executed_command} command in {ctx.guild.name} (ID: {ctx.guild.id}) by {ctx.author} (ID: {ctx.author.id})")
 
 
-# The code in this event is executed every time a valid commands catches an error
+
 @bot.event
 async def on_slash_command_error(context: SlashContext, error: Exception):
     if isinstance(error, exceptions.UserBlacklisted):
-        """
-        The code here will only execute if the error is an instance of 'UserBlacklisted', which can occur when using
-        the @checks.is_owner() check in your command, or you can raise the error by yourself.
-        
-        'hidden=True' will make so that only the user who execute the command can see the message
-        """
         print("A blacklisted user tried to execute a command.")
         return await context.send("You are blacklisted from using the bot.", hidden=True)
     raise error
 
 
-# Run the bot with the token
-bot.run(config["token"])
+
+bot.run(config["OTEwOTE4MjI4MzYzMDUxMDg5.YZZ0tQ.EWqSGIcTsKu2iD-mZQEHiHzBnq8"])
